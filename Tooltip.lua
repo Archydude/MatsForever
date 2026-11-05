@@ -1,0 +1,212 @@
+-- Mats Forever: the tooltip lines
+--
+--   Used by: [icon] Engineering (6), [icon] First Aid (2)
+--
+-- The character's own professions come first, in green. Holding Shift lists each profession's recipes
+-- with how many of the material they take and their skill levels, easiest first:
+--
+--   Rough Copper Bomb x2          60 75 90
+--
+-- in the recipe colors: the skill it needs (orange, only when the game data has it), then where it turns
+-- yellow, green and grey.
+
+local _, ns = ...
+
+local MAX_RECIPES = 10 -- per profession in the Shift list; the rest are counted in one line
+
+local LABEL = "|cffffd100Used by:|r "
+local MINE_COLOR = "|cff40ff40%s|r"
+local OTHER_COLOR = "|cffffffff%s|r"
+local GREY = { 0.6, 0.6, 0.6 }
+local COUNT_COLOR = "|cff66ccffx%d|r" -- light blue: not one of the skill colors, the profession green or the label gold
+local ICON = "|T%d:0|t " -- 0: as tall as the text
+local SKILL_COLORS = { "|cffff8040%d|r", "|cffffff00%d|r", "|cff40bf40%d|r", "|cff808080%d|r" } -- orange, yellow, green, grey
+
+---------------------------------------------------------------------------
+-- Reading the data
+---------------------------------------------------------------------------
+
+-- item ID -> { { prof = id, recipes = { { spell, count, required, yellow, grey }, ... } }, ... }, read from
+-- the data on first hover. required is 0 when the game data doesn't have it.
+local parsed = {}
+
+local function usesOf(item)
+	local cached = parsed[item]
+	if cached ~= nil then return cached end
+	local text = ns.REAGENTS[item]
+	if not text then
+		parsed[item] = false
+		return false
+	end
+	local uses = {}
+	for prof, list in text:gmatch("(%d+):([^;]+)") do
+		local recipes = {}
+		for spell, count, required, yellow, grey in list:gmatch("(%d+)%.(%d+)%.(%d+)%.(%d+)%.(%d+)") do
+			recipes[#recipes + 1] = { tonumber(spell), tonumber(count), tonumber(required), tonumber(yellow), tonumber(grey) }
+		end
+		uses[#uses + 1] = { prof = tonumber(prof), recipes = recipes }
+	end
+	parsed[item] = uses
+	return uses
+end
+
+-- The character's professions first, then the ones with the most recipes.
+local function sorted(uses)
+	local list = {}
+	for i, use in ipairs(uses) do list[i] = use end
+	table.sort(list, function(a, b)
+		local ma, mb = ns.IsMyProfession(a.prof), ns.IsMyProfession(b.prof)
+		if ma ~= mb then return ma end
+		if #a.recipes ~= #b.recipes then return #a.recipes > #b.recipes end
+		return ns.ProfessionName(a.prof) < ns.ProfessionName(b.prof)
+	end)
+	return list
+end
+
+local function spellName(id)
+	if C_Spell and C_Spell.GetSpellName then return C_Spell.GetSpellName(id) end
+	return (GetSpellInfo(id))
+end
+
+-- "30 60 75 90" in the recipe colors. Green is halfway between yellow and grey, like the game works it out.
+local function skillLevels(recipe)
+	local required, yellow, grey = recipe[3], recipe[4], recipe[5]
+	local parts = {}
+	if required > 0 then parts[#parts + 1] = SKILL_COLORS[1]:format(required) end
+	if grey > 0 then
+		parts[#parts + 1] = SKILL_COLORS[2]:format(yellow)
+		parts[#parts + 1] = SKILL_COLORS[3]:format(math.floor((yellow + grey) / 2))
+		parts[#parts + 1] = SKILL_COLORS[4]:format(grey)
+	end
+	return table.concat(parts, " ")
+end
+
+-- The profession's icon and name, the name in green when it's one of the character's.
+local function coloredName(prof)
+	local icon = ns.PROFESSION_ICONS[prof]
+	local name = (ns.IsMyProfession(prof) and MINE_COLOR or OTHER_COLOR):format(ns.ProfessionName(prof))
+	return icon and ICON:format(icon) .. name or name
+end
+
+---------------------------------------------------------------------------
+-- Adding the lines
+---------------------------------------------------------------------------
+
+local function addSummary(tooltip, uses)
+	local parts = {}
+	for i, use in ipairs(uses) do
+		parts[i] = coloredName(use.prof) .. " (" .. #use.recipes .. ")"
+	end
+	tooltip:AddLine(LABEL .. table.concat(parts, ", "), 1, 1, 1, true)
+end
+
+local function addRecipeList(tooltip, uses)
+	tooltip:AddLine(" ")
+	tooltip:AddLine(LABEL)
+	for _, use in ipairs(uses) do
+		tooltip:AddLine(coloredName(use.prof))
+		local shown = 0
+		for _, recipe in ipairs(use.recipes) do
+			if shown == MAX_RECIPES then break end
+			local name = spellName(recipe[1])
+			if name then
+				tooltip:AddDoubleLine("    " .. name .. " " .. COUNT_COLOR:format(recipe[2]), skillLevels(recipe),
+					1, 1, 1, 1, 1, 1)
+				shown = shown + 1
+			end
+		end
+		local more = #use.recipes - shown
+		if more > 0 then
+			tooltip:AddLine(("    and %d more"):format(more), unpack(GREY))
+		end
+	end
+end
+
+local function addLines(tooltip, item)
+	local uses = usesOf(item)
+	if not uses then return false end
+	uses = sorted(uses)
+	if ns.db.recipeList and IsShiftKeyDown() then
+		addRecipeList(tooltip, uses)
+	else
+		addSummary(tooltip, uses)
+	end
+	return true
+end
+
+---------------------------------------------------------------------------
+-- Hooking item tooltips
+---------------------------------------------------------------------------
+
+-- Tooltips that already got their lines, until they're cleared. Some tooltips report the same item
+-- twice while it loads.
+local done = setmetatable({}, { __mode = "k" })
+local watched = setmetatable({}, { __mode = "k" })
+
+local function watch(tooltip)
+	if watched[tooltip] then return end
+	watched[tooltip] = true
+	local function reset() done[tooltip] = nil end
+	pcall(tooltip.HookScript, tooltip, "OnTooltipCleared", reset)
+	pcall(tooltip.HookScript, tooltip, "OnHide", reset)
+end
+
+-- The tooltip showing a material, so pressing or letting go of Shift can redraw it.
+local shownOn
+
+-- Returns true when lines were added.
+local function onItem(tooltip, id)
+	if not (ns.db and ns.db.tooltip) then return end
+	if not ns.Readable(id) or type(id) ~= "number" or not tooltip.AddLine then return end
+	watch(tooltip)
+	if done[tooltip] == id then return end
+	done[tooltip] = id
+	if addLines(tooltip, id) then
+		shownOn = tooltip
+		return true
+	end
+end
+
+local function itemID(link)
+	return link and tonumber(link:match("item:(%d+)"))
+end
+
+if TooltipDataProcessor and TooltipDataProcessor.AddTooltipPostCall and Enum.TooltipDataType then
+	TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, function(tooltip, data)
+		onItem(tooltip, data and data.id)
+	end)
+else
+	local function onSetItem(tooltip)
+		local ok, _, link = pcall(tooltip.GetItem, tooltip)
+		if ok and onItem(tooltip, itemID(link)) then tooltip:Show() end
+	end
+	for _, tooltip in ipairs({ GameTooltip, ItemRefTooltip }) do
+		if tooltip then tooltip:HookScript("OnTooltipSetItem", onSetItem) end
+	end
+end
+
+---------------------------------------------------------------------------
+-- Redrawing when Shift is pressed or let go
+---------------------------------------------------------------------------
+
+local function redraw(tooltip)
+	if tooltip.RefreshData then
+		tooltip:RefreshData()
+		return
+	end
+	-- Older tooltips: ask what the mouse is over to show its tooltip again.
+	local owner = tooltip:GetOwner()
+	local onEnter = owner and owner.GetScript and owner:GetScript("OnEnter")
+	if onEnter and owner:IsMouseOver() then onEnter(owner) end
+end
+
+local shiftWatch = CreateFrame("Frame")
+shiftWatch:RegisterEvent("MODIFIER_STATE_CHANGED")
+shiftWatch:SetScript("OnEvent", function(_, _, key)
+	if not (ns.db and ns.db.tooltip and ns.db.recipeList) then return end
+	if key ~= "LSHIFT" and key ~= "RSHIFT" then return end
+	local tooltip = shownOn
+	if not (tooltip and tooltip:IsShown() and done[tooltip]) then return end
+	done[tooltip] = nil
+	redraw(tooltip)
+end)
