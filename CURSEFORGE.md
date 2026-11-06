@@ -31,7 +31,7 @@ See which professions use any crafting material, and in how many recipes, right 
 
 Mats Forever shows on every crafting material's tooltip not just which professions use it, but **how many recipes** each one has for it, and with Shift held, **the recipes themselves** with their skill levels. You know what a material is worth to you the moment you loot it.
 
-Example, on Linen Cloth: `Used by: Engineering (6), Blacksmithing (3), First Aid (2), Tailoring (1)`
+Example, on Linen Cloth: `Mat For: Engineering (6), Blacksmithing (3), First Aid (2), Tailoring (1)`
 
 ### Hold Shift for the recipes
 Hold **Shift** while hovering a material to see each profession's recipes that use it, easiest first, with how many of the material each one takes and its **skill levels** in the recipe colors: the skill it needs (orange, for recipes learned from a recipe item), then where it turns yellow, green and grey.
@@ -42,7 +42,7 @@ Example, on Linen Cloth:
 `    EZ-Thro Dynamite x1      100 115 122 130`
 
 ### Your professions first
-Each profession shows its icon, and the ones your character has come first, in green. One glance tells you whether a material is for you, for an alt, or for the auction house.
+Each profession shows its icon, and the ones your character has come first, in green. One glance tells you whether a material is for you, for an alt, or for the auction house. Turn on **Only my professions** to hide the rest.
 
 ### Every profession, every recipe
 - **All professions count**, not just yours: Alchemy, Blacksmithing, Cooking, Enchanting, Engineering, First Aid, Leatherworking, Tailoring, Mining smelting, rogue Poisons, and the new Herbalism, Skinning and Fishing crafts.
@@ -60,21 +60,21 @@ Made for **WoW Forever**.
 
 ### Good to know
 - A big WoW Forever update that adds recipes may need an update here to show them.
-- **/matsforever** opens the options, where you can turn off the tooltip line or the Shift list.
+- **/matsforever** opens the options: turn off the tooltip line or the Shift list, or show only your professions.
 
 **Feedback and bug reports are welcome** in the comments.
 ```
 ---
 
-**Source / Issues links:** leave empty unless you put the code on GitHub.
+**Source / Issues links:** `https://github.com/Archydude/MatsForever` and `https://github.com/Archydude/MatsForever/issues`
 
 ## B. Upload File form
 
-**File:** `dist\MatsForever-1.0.0.zip`
+**File:** `dist\MatsForever-1.1.0.zip`
 
 **Display name**
 ```
-Mats Forever 1.0.0
+Mats Forever 1.1.0
 ```
 
 **Release type:** `Release`
@@ -83,9 +83,7 @@ Mats Forever 1.0.0
 
 **Changelog** (paste only the newest part; paste older parts too if they never went up)
 ```markdown
-1.0.0 - First release.
-- A crafting material's tooltip shows which professions use it and in how many recipes, like `Used by: Engineering (6), Blacksmithing (3), First Aid (2), Tailoring (1)` on Linen Cloth. Each profession shows its icon, and your own come first, in green.
-- Hold **Shift** to see the recipes themselves, how many of the material each one takes, and their skill levels in the recipe colors: the skill a recipe needs (orange, for recipes learned from a recipe item), then where it turns yellow, green and grey.
-- Covers every profession, including the recipes new to WoW Forever, whether or not your character has learned them.
-- `/matsforever` opens the options.
+1.1.0
+- The tooltip line now starts with **Mat For:** instead of "Used by:".
+- New: an **Only my professions** option leaves out professions your character doesn't have. Materials none of your professions use get no line.
 ```

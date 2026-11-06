@@ -24,6 +24,7 @@ end
 ns.DEFAULTS = {
 	tooltip = true,    -- add the line to material tooltips
 	recipeList = true, -- holding Shift lists the recipes
+	onlyMine = false,  -- leave out professions the character doesn't have
 }
 
 ---------------------------------------------------------------------------
@@ -62,7 +63,11 @@ end
 
 function ns.IsMyProfession(id)
 	if not mine then readMyProfessions() end
-	return mine[id] or false
+	local yes = mine[id] or false
+	-- Right after login the game may not have told us the character's skills yet; ask again next time
+	-- rather than keep an empty list.
+	if next(mine) == nil then mine = nil end
+	return yes
 end
 
 ---------------------------------------------------------------------------

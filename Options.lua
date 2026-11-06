@@ -23,6 +23,8 @@ function ns.CreateOptions()
 		"Show which professions use a crafting material, and in how many recipes, on its tooltip.")
 	checkbox("recipeList", "Hold Shift for recipes",
 		"While you hold Shift, the tooltip lists each profession's recipes and how many of the material they take.")
+	checkbox("onlyMine", "Only my professions",
+		"Leave out professions this character doesn't have. Materials no profession of yours uses get no line.")
 
 	Settings.RegisterAddOnCategory(category)
 end

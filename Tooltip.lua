@@ -1,8 +1,8 @@
 -- Mats Forever: the tooltip lines
 --
---   Used by: [icon] Engineering (6), [icon] First Aid (2)
+--   Mat For: [icon] Engineering (6), [icon] First Aid (2)
 --
--- The character's own professions come first, in green. Holding Shift lists each profession's recipes
+-- The character's own professions come first, in green; an option hides the others. Holding Shift lists each profession's recipes
 -- with how many of the material they take and their skill levels, easiest first:
 --
 --   Rough Copper Bomb x2          60 75 90
@@ -14,7 +14,7 @@ local _, ns = ...
 
 local MAX_RECIPES = 10 -- per profession in the Shift list; the rest are counted in one line
 
-local LABEL = "|cffffd100Used by:|r "
+local LABEL = "|cffffd100Mat For:|r "
 local MINE_COLOR = "|cff40ff40%s|r"
 local OTHER_COLOR = "|cffffffff%s|r"
 local GREY = { 0.6, 0.6, 0.6 }
@@ -50,10 +50,13 @@ local function usesOf(item)
 	return uses
 end
 
--- The character's professions first, then the ones with the most recipes.
-local function sorted(uses)
+-- The professions to show: the character's first, then the ones with the most recipes. With the
+-- "only my professions" option, just the character's.
+local function shownUses(uses)
 	local list = {}
-	for i, use in ipairs(uses) do list[i] = use end
+	for _, use in ipairs(uses) do
+		if not ns.db.onlyMine or ns.IsMyProfession(use.prof) then list[#list + 1] = use end
+	end
 	table.sort(list, function(a, b)
 		local ma, mb = ns.IsMyProfession(a.prof), ns.IsMyProfession(b.prof)
 		if ma ~= mb then return ma end
@@ -125,7 +128,8 @@ end
 local function addLines(tooltip, item)
 	local uses = usesOf(item)
 	if not uses then return false end
-	uses = sorted(uses)
+	uses = shownUses(uses)
+	if #uses == 0 then return false end
 	if ns.db.recipeList and IsShiftKeyDown() then
 		addRecipeList(tooltip, uses)
 	else

@@ -2,9 +2,9 @@
 
 Which professions use a crafting material, right on its tooltip.
 
-Hover any crafting material and Mats Forever adds a line naming every profession that uses it, with its icon, and how many of its recipes need it. Example, on Linen Cloth: `Used by: Engineering (6), Blacksmithing (3), First Aid (2), Tailoring (1)`
+Hover any crafting material and Mats Forever adds a line naming every profession that uses it, with its icon, and how many of its recipes need it. Example, on Linen Cloth: `Mat For: Engineering (6), Blacksmithing (3), First Aid (2), Tailoring (1)`
 
-- **Your own professions come first**, in green, so you can tell at a glance whether to keep a material or sell it.
+- **Your own professions come first**, in green, so you can tell at a glance whether to keep a material or sell it. The **Only my professions** option hides the rest.
 - **Every profession counts**, not just the ones your character knows: Alchemy, Blacksmithing, Cooking, Enchanting, Engineering, First Aid, Leatherworking, Tailoring, Mining (smelting), rogue Poisons, and the new Herbalism, Skinning and Fishing crafts.
 - **Recipes you haven't learned count too**, including the recipes new to WoW Forever.
 
@@ -31,6 +31,7 @@ Esc > Options > AddOns > Mats Forever, or type `/matsforever`:
 
 - **Show on tooltips**: turn the line off without disabling the addon.
 - **Hold Shift for recipes**: turn off the recipe list if you use Shift for something else.
+- **Only my professions**: leave out professions this character doesn't have. Materials none of your professions use get no line.
 
 ## Good to know
 

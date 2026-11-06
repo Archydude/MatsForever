@@ -2,10 +2,14 @@
 ArchdudeWhatsNew:Register("MatsForever", {
 	title = "Mats Forever",
 	icon = "Interface\\Icons\\INV_Fabric_Linen_01",
-	version = "1.0.0",
+	version = "1.1.0",
 	seen = "MatsForeverWhatsNew",
 	saved = { "MatsForeverDB" },
 	changes = {
+		{ "1.1.0",
+			"The tooltip line now starts with |cffffd100Mat For:|r instead of \"Used by:\".",
+			"New: an |cffffd100Only my professions|r option leaves out professions your character doesn't have. Materials none of your professions use get no line.",
+		},
 		{ "1.0.0",
 			"First release: a crafting material's tooltip shows which professions use it and in how many recipes, like |cffffd100Used by: Engineering (6), Blacksmithing (3), First Aid (2), Tailoring (1)|r on Linen Cloth. Each profession shows its icon, and your own come first, in green.",
 			"Hold |cffffd100Shift|r to see the recipes themselves, how many of the material each one takes, and their skill levels in the recipe colors: the skill a recipe needs (orange, for recipes learned from a recipe item), then where it turns yellow, green and grey.",
