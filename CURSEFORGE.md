@@ -21,7 +21,7 @@ See which professions use any crafting material, and in how many recipes, right 
 
 **License:** `MIT License`
 
-**Logo / avatar:** none yet. Make one before the first upload and save it as `MatsForever\images\logo-v1.png`.
+**Logo / avatar:** `MatsForever\images\logo-v1.png` (an open golden recipe book over linen, leather, copper ore, a vial and herbs)
 
 **Description** (paste everything between the lines)
 
