@@ -3,8 +3,10 @@
 --   Mat For: [icon] Engineering (6), [icon] First Aid (2)
 --
 -- The character's own professions come first, in green; an option hides the others. Holding Shift lists each profession's recipes
--- with how many of the material they take and their skill levels, easiest first:
+-- with how many of the material they take and their skill levels, easiest first, and the character's
+-- own skill next to each of their professions:
 --
+--   Engineering                        72
 --   Rough Copper Bomb x2          60 75 90
 --
 -- in the recipe colors: the skill it needs (orange, only when the game data has it), then where it turns
@@ -72,13 +74,18 @@ local function spellName(id)
 end
 
 -- "30 60 75 90" in the recipe colors. Green is halfway between yellow and grey, like the game works it out.
+-- Some Forever recipes need more skill than where they turn yellow (or green); those colors are already
+-- behind the player when they learn it, so they're left out: "225 230 240" is learned at 225, yellow
+-- right away, green at 230. One that is already grey when learned shows only its required skill, in grey.
 local function skillLevels(recipe)
 	local required, yellow, grey = recipe[3], recipe[4], recipe[5]
+	if grey > 0 and required >= grey then return SKILL_COLORS[4]:format(required) end
+	local green = math.floor((yellow + grey) / 2)
 	local parts = {}
 	if required > 0 then parts[#parts + 1] = SKILL_COLORS[1]:format(required) end
 	if grey > 0 then
-		parts[#parts + 1] = SKILL_COLORS[2]:format(yellow)
-		parts[#parts + 1] = SKILL_COLORS[3]:format(math.floor((yellow + grey) / 2))
+		if yellow > required then parts[#parts + 1] = SKILL_COLORS[2]:format(yellow) end
+		if green > required then parts[#parts + 1] = SKILL_COLORS[3]:format(green) end
 		parts[#parts + 1] = SKILL_COLORS[4]:format(grey)
 	end
 	return table.concat(parts, " ")
@@ -107,7 +114,13 @@ local function addRecipeList(tooltip, uses)
 	tooltip:AddLine(" ")
 	tooltip:AddLine(LABEL)
 	for _, use in ipairs(uses) do
-		tooltip:AddLine(coloredName(use.prof))
+		local skill = ns.MySkill(use.prof)
+		if skill and skill > 0 then
+			-- The character's own skill on the right, above the recipes' skill levels.
+			tooltip:AddDoubleLine(coloredName(use.prof), MINE_COLOR:format(skill))
+		else
+			tooltip:AddLine(coloredName(use.prof))
+		end
 		local shown = 0
 		for _, recipe in ipairs(use.recipes) do
 			if shown == MAX_RECIPES then break end

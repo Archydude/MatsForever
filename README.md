@@ -15,10 +15,12 @@ While you hold **Shift**, the tooltip lists each profession's recipes that use t
 - **Orange**: the skill the recipe needs. Shown for recipes learned from a pattern, plan, schematic or recipe item; the game doesn't publish what trainers ask for.
 - **Yellow, green, grey**: where the recipe turns yellow, green and grey, so you can see how long it gives skill-ups.
 
-Example, on Linen Cloth:
+Your own professions show your current skill at the end of their row, so you can compare it with the recipes' levels.
+
+Example, on Linen Cloth, for an engineer with 72 skill:
 
 ```
-Engineering
+Engineering                          72
     Rough Dynamite x1           30 45 60
     EZ-Thro Dynamite x1         100 115 122 130
 ```

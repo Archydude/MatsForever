@@ -2,10 +2,15 @@
 ArchdudeWhatsNew:Register("MatsForever", {
 	title = "Mats Forever",
 	icon = "Interface\\Icons\\INV_Fabric_Linen_01",
-	version = "1.1.0",
+	version = "1.2.0",
 	seen = "MatsForeverWhatsNew",
 	saved = { "MatsForeverDB" },
 	changes = {
+		{ "1.2.0",
+			"New: in the Shift recipe list, your own professions show your current skill at the end of their row, so you can compare it with the recipes' levels.",
+			"Fixed: a few trainer recipes showed a required skill that didn't fit their colors, like Coarse Sharpening Stone needing 75 but turning grey at 55. Those old numbers are gone.",
+			"Recipes that need more skill than where they turn yellow no longer list the colors you're already past when you learn them.",
+		},
 		{ "1.1.0",
 			"The tooltip line now starts with |cffffd100Mat For:|r instead of \"Used by:\".",
 			"New: an |cffffd100Only my professions|r option leaves out professions your character doesn't have. Materials none of your professions use get no line.",

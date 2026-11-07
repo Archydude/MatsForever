@@ -37,8 +37,8 @@ function ns.ProfessionName(id)
 	return names and names[id] or ns.PROFESSIONS[id]
 end
 
--- profession ID -> true for the character's professions. Built when first needed, and again
--- whenever the character's skills change.
+-- profession ID -> the character's skill in it, for the character's professions. Built when first
+-- needed, and again whenever the character's skills change.
 local mine
 
 local function readMyProfessions()
@@ -48,26 +48,35 @@ local function readMyProfessions()
 
 	if GetProfessions and GetProfessionInfo then
 		for _, index in pairs({ GetProfessions() }) do
-			local name, _, _, _, _, _, skillLine = GetProfessionInfo(index)
+			local name, _, rank, _, _, _, skillLine = GetProfessionInfo(index)
 			local id = (skillLine and ns.PROFESSIONS[skillLine] and skillLine) or byName[name]
-			if id then mine[id] = true end
+			if id then mine[id] = tonumber(rank) or 0 end
 		end
 	end
 	if GetNumSkillLines and GetSkillLineInfo then
 		for i = 1, GetNumSkillLines() do
-			local name, isHeader = GetSkillLineInfo(i)
-			if name and not isHeader and byName[name] then mine[byName[name]] = true end
+			local name, isHeader, _, rank = GetSkillLineInfo(i)
+			if name and not isHeader and byName[name] then mine[byName[name]] = tonumber(rank) or 0 end
 		end
 	end
 end
 
-function ns.IsMyProfession(id)
+local function myProfessions()
 	if not mine then readMyProfessions() end
-	local yes = mine[id] or false
+	local list = mine
 	-- Right after login the game may not have told us the character's skills yet; ask again next time
 	-- rather than keep an empty list.
 	if next(mine) == nil then mine = nil end
-	return yes
+	return list
+end
+
+function ns.IsMyProfession(id)
+	return myProfessions()[id] ~= nil
+end
+
+-- The character's skill in a profession, or nil when the character doesn't have it.
+function ns.MySkill(id)
+	return myProfessions()[id]
 end
 
 ---------------------------------------------------------------------------
