@@ -2,7 +2,7 @@
 ## Title: Mats Forever
 ## Notes: Shows on every crafting material's tooltip which professions use it and in how many recipes. Hold Shift to see the recipes.
 ## Author: Archdude
-## Version: 1.2.0
+## Version: 1.3.0
 ## SavedVariables: MatsForeverDB, MatsForeverWhatsNew
 ## IconTexture: Interface\Icons\INV_Fabric_Linen_01
 ## Category-enUS: Professions

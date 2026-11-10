@@ -34,7 +34,7 @@ Mats Forever shows on every crafting material's tooltip not just which professio
 Example, on Linen Cloth: `Mat For: Engineering (6), Blacksmithing (3), First Aid (2), Tailoring (1)`
 
 ### Hold Shift for the recipes
-Hold **Shift** while hovering a material to see each profession's recipes that use it, easiest first, with how many of the material each one takes and its **skill levels** in the recipe colors: the skill it needs (orange, for recipes learned from a recipe item), then where it turns yellow, green and grey. Your own professions also show **your current skill**.
+Hold **Shift** while hovering a material to see each profession's recipes that use it, easiest first, with how many of the material each one takes and its **skill levels** in the recipe colors: the skill it needs (orange, for recipes learned from a recipe item), then where it turns yellow, green and grey. Your own professions show **your current skill**, and long lists there skip recipes already grey for you.
 
 Example, on Linen Cloth, for an engineer with 72 skill:
 `Engineering      72`
@@ -42,7 +42,7 @@ Example, on Linen Cloth, for an engineer with 72 skill:
 `    EZ-Thro Dynamite x1      100 115 122 130`
 
 ### Your professions first
-Each profession shows its icon, and the ones your character has come first, in green. One glance tells you whether a material is for you, for an alt, or for the auction house. Turn on **Only my professions** to hide the rest.
+Each profession shows its icon, and the ones your character has come first, in green, so you know at a glance whether a material is for you, an alt or the auction house. Turn on **Only my professions** to hide the rest.
 
 ### Every profession, every recipe
 - **All professions count**, not just yours: Alchemy, Blacksmithing, Cooking, Enchanting, Engineering, First Aid, Leatherworking, Tailoring, Mining smelting, rogue Poisons, and the new Herbalism, Skinning and Fishing crafts.
@@ -65,11 +65,11 @@ Bags, bank, the auction house, mail, loot windows, chat links and recipe windows
 
 ## B. Upload File form
 
-**File:** `dist\MatsForever-1.2.0.zip`
+**File:** `dist\MatsForever-1.3.0.zip`
 
 **Display name**
 ```
-Mats Forever 1.2.0
+Mats Forever 1.3.0
 ```
 
 **Release type:** `Release`
@@ -78,8 +78,7 @@ Mats Forever 1.2.0
 
 **Changelog** (paste only the newest part; paste older parts too if they never went up)
 ```markdown
-1.2.0
-- New: in the Shift recipe list, your own professions show your current skill at the end of their row, so you can compare it with the recipes' levels.
-- Fixed: a few trainer recipes showed a required skill that didn't fit their colors, like Coarse Sharpening Stone needing 75 but turning grey at 55. Those old numbers are gone.
-- Recipes that need more skill than where they turn yellow no longer list the colors you're already past when you learn them.
+1.3.0
+- New: in your own professions, a long Shift recipe list leaves out the recipes that are already grey for you, so it starts at the ones that still give skill-ups. A line says how many were left out.
+- A profession with up to 15 recipes for the material now lists them all, instead of 10 and "and 2 more".
 ```

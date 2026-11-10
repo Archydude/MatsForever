@@ -2,10 +2,14 @@
 ArchdudeWhatsNew:Register("MatsForever", {
 	title = "Mats Forever",
 	icon = "Interface\\Icons\\INV_Fabric_Linen_01",
-	version = "1.2.0",
+	version = "1.3.0",
 	seen = "MatsForeverWhatsNew",
 	saved = { "MatsForeverDB" },
 	changes = {
+		{ "1.3.0",
+			"New: in your own professions, a long Shift recipe list leaves out the recipes that are already grey for you, so it starts at the ones that still give skill-ups. A line says how many were left out.",
+			"A profession with up to 15 recipes for the material now lists them all, instead of 10 and \"and 2 more\".",
+		},
 		{ "1.2.0",
 			"New: in the Shift recipe list, your own professions show your current skill at the end of their row, so you can compare it with the recipes' levels.",
 			"Fixed: a few trainer recipes showed a required skill that didn't fit their colors, like Coarse Sharpening Stone needing 75 but turning grey at 55. Those old numbers are gone.",

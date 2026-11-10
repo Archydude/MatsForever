@@ -25,7 +25,7 @@ Engineering                          72
     EZ-Thro Dynamite x1         100 115 122 130
 ```
 
-Professions with a long list show their first 10 recipes and how many more there are.
+Professions with more than 15 recipes for the material show their first 10 and how many more there are. In your own professions, such a long list leaves out the recipes that are already grey for you, so it starts at the ones that still give skill-ups.
 
 ## Options
 

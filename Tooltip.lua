@@ -15,6 +15,7 @@
 local _, ns = ...
 
 local MAX_RECIPES = 10 -- per profession in the Shift list; the rest are counted in one line
+local MAX_HIDDEN_ALL = 5 -- a profession with at most this many past MAX_RECIPES shows them all instead
 
 local LABEL = "|cffffd100Mat For:|r "
 local MINE_COLOR = "|cff40ff40%s|r"
@@ -110,6 +111,26 @@ local function addSummary(tooltip, uses)
 	tooltip:AddLine(LABEL .. table.concat(parts, ", "), 1, 1, 1, true)
 end
 
+-- Whether a list this long is cut short. "and 2 more" would take a line too, so short overflows
+-- are listed in full.
+local function tooLong(count)
+	return count > MAX_RECIPES + MAX_HIDDEN_ALL
+end
+
+-- The recipes to list for one profession, and how many grey ones were left out. A long list in one
+-- of the character's professions starts at the recipes that still give skill-ups; when every
+-- recipe is grey, it's listed as it is.
+local function recipesToList(recipes, skill)
+	if not (skill and skill > 0 and tooLong(#recipes)) then return recipes, 0 end
+	local list = {}
+	for _, recipe in ipairs(recipes) do
+		local grey = recipe[5]
+		if grey == 0 or grey > skill then list[#list + 1] = recipe end
+	end
+	if #list == 0 then return recipes, 0 end
+	return list, #recipes - #list
+end
+
 local function addRecipeList(tooltip, uses)
 	tooltip:AddLine(" ")
 	tooltip:AddLine(LABEL)
@@ -121,9 +142,15 @@ local function addRecipeList(tooltip, uses)
 		else
 			tooltip:AddLine(coloredName(use.prof))
 		end
+		local recipes, greyLeftOut = recipesToList(use.recipes, skill)
+		if greyLeftOut > 0 then
+			local text = greyLeftOut == 1 and "    1 grey recipe left out" or ("    %d grey recipes left out"):format(greyLeftOut)
+			tooltip:AddLine(text, unpack(GREY))
+		end
 		local shown = 0
-		for _, recipe in ipairs(use.recipes) do
-			if shown == MAX_RECIPES then break end
+		local limit = tooLong(#recipes) and MAX_RECIPES or #recipes
+		for _, recipe in ipairs(recipes) do
+			if shown == limit then break end
 			local name = spellName(recipe[1])
 			if name then
 				tooltip:AddDoubleLine("    " .. name .. " " .. COUNT_COLOR:format(recipe[2]), skillLevels(recipe),
@@ -131,7 +158,7 @@ local function addRecipeList(tooltip, uses)
 				shown = shown + 1
 			end
 		end
-		local more = #use.recipes - shown
+		local more = #recipes - shown
 		if more > 0 then
 			tooltip:AddLine(("    and %d more"):format(more), unpack(GREY))
 		end
