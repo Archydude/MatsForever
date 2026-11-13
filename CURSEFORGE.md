@@ -65,11 +65,11 @@ Bags, bank, the auction house, mail, loot windows, chat links and recipe windows
 
 ## B. Upload File form
 
-**File:** `dist\MatsForever-1.3.0.zip`
+**File:** `dist\MatsForever-1.3.1.zip`
 
 **Display name**
 ```
-Mats Forever 1.3.0
+Mats Forever 1.3.1
 ```
 
 **Release type:** `Release`
@@ -78,6 +78,9 @@ Mats Forever 1.3.0
 
 **Changelog** (paste only the newest part; paste older parts too if they never went up)
 ```markdown
+1.3.1
+- Fixed an error when opening the options during combat ("tried to call the protected function 'OpenSettingsPanel()'"). The options now open as soon as the fight ends.
+
 1.3.0
 - New: in your own professions, a long Shift recipe list leaves out the recipes that are already grey for you, so it starts at the ones that still give skill-ups. A line says how many were left out.
 - A profession with up to 15 recipes for the material now lists them all, instead of 10 and "and 2 more".
