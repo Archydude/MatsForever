@@ -12,6 +12,7 @@
 Core.lua
 Data\Forever.lua
 Tooltip.lua
+Options.xml
 Options.lua
 WhatsNew.lua
 WhatsNewData.lua

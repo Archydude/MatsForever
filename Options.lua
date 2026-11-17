@@ -28,13 +28,17 @@ function ns.OpenOptions()
 end
 
 function ns.CreateOptions()
-	category = Settings.RegisterVerticalLayoutCategory("Mats Forever")
+	local layout
+	category, layout = Settings.RegisterVerticalLayoutCategory("Mats Forever")
 	local VarType = Settings.VarType or { Boolean = "boolean" }
 
+	-- Like Settings.CreateCheckbox, but on our own row template (see Options.xml). On
+	-- Blizzard's template, a row that drew one of our settings is later reused for Blizzard's
+	-- own, which then can't call protected functions (ADDON_ACTION_FORBIDDEN on IsUserOAuthed).
 	local function checkbox(key, name, tooltip)
 		local setting = Settings.RegisterAddOnSetting(category, "MATSFOREVER_" .. key:upper(), key, ns.db,
 			VarType.Boolean, name, ns.DEFAULTS[key])
-		Settings.CreateCheckbox(category, setting, tooltip)
+		layout:AddInitializer(Settings.CreateControlInitializer("MatsForeverSettingsCheckboxTemplate", setting, nil, tooltip))
 	end
 
 	checkbox("tooltip", "Show on tooltips",
