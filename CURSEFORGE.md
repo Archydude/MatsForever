@@ -65,11 +65,11 @@ Bags, bank, the auction house, mail, loot windows, chat links and recipe windows
 
 ## B. Upload File form
 
-**File:** `dist\MatsForever-1.3.1.zip`
+**File:** `dist\MatsForever-1.3.2.zip`
 
 **Display name**
 ```
-Mats Forever 1.3.1
+Mats Forever 1.3.2
 ```
 
 **Release type:** `Release`
@@ -78,6 +78,9 @@ Mats Forever 1.3.1
 
 **Changelog** (paste only the newest part; paste older parts too if they never went up)
 ```markdown
+1.3.2
+- Fixed: after you opened Mats Forever's options, the game's own options could show the error "AddOn 'MatsForever' tried to call the protected function 'IsUserOAuthed()'".
+
 1.3.1
 - Fixed an error when opening the options during combat ("tried to call the protected function 'OpenSettingsPanel()'"). The options now open as soon as the fight ends.
 

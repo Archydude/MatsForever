@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.3.2
+- Fixed: after you opened Mats Forever's options, the game's own options could show the error "AddOn 'MatsForever' tried to call the protected function 'IsUserOAuthed()'".
+
 ## 1.3.1
 - Fixed an error when opening the options during combat ("tried to call the protected function 'OpenSettingsPanel()'"). The options now open as soon as the fight ends.
 

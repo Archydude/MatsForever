@@ -2,10 +2,13 @@
 ArchdudeWhatsNew:Register("MatsForever", {
 	title = "Mats Forever",
 	icon = "Interface\\Icons\\INV_Fabric_Linen_01",
-	version = "1.3.1",
+	version = "1.3.2",
 	seen = "MatsForeverWhatsNew",
 	saved = { "MatsForeverDB" },
 	changes = {
+		{ "1.3.2",
+			"Fixed: after you opened Mats Forever's options, the game's own options could show the error \"AddOn 'MatsForever' tried to call the protected function 'IsUserOAuthed()'\".",
+		},
 		{ "1.3.1",
 			"Fixed an error when opening the options during combat (\"tried to call the protected function 'OpenSettingsPanel()'\"). The options now open as soon as the fight ends.",
 		},
