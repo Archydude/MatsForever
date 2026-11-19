@@ -50,3 +50,6 @@ Copy the `MatsForever` folder to `World of Warcraft\_forever_\Interface\AddOns\`
 ## Use
 
 Hover a material anywhere: bags, bank, the auction house, mail, loot windows, chat links and recipe windows.
+
+## Made with AI
+This addon was made with AI.

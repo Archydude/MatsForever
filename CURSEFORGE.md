@@ -57,6 +57,8 @@ Bags, bank, the auction house, mail, loot windows, chat links and recipe windows
 - A big WoW Forever update that adds recipes may need an update here to show them.
 - **/matsforever** opens the options: turn off the tooltip line or the Shift list, or show only your professions.
 
+This addon was made with AI.
+
 **Feedback and bug reports are welcome** in the comments.
 ```
 ---
