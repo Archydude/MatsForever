@@ -10,7 +10,7 @@ Hover any crafting material and Mats Forever adds a line naming every profession
 
 ## Hold Shift for the recipes
 
-While you hold **Shift**, the tooltip lists each profession's recipes that use the material, easiest first, with how many of it each one takes next to its name, and its skill levels in the recipe colors on the right:
+While you hold **Shift**, the tooltip lists each profession's recipes that use the material, easiest first. Each recipe shows the icon of the item it makes, how many of the material it takes next to its name, and its skill levels in the recipe colors on the right:
 
 - **Orange**: the skill the recipe needs. Shown for recipes learned from a pattern, plan, schematic or recipe item; the game doesn't publish what trainers ask for.
 - **Yellow, green, grey**: where the recipe turns yellow, green and grey, so you can see how long it gives skill-ups.
@@ -37,6 +37,7 @@ Esc > Options > AddOns > Mats Forever, or type `/matsforever`:
 
 ## Good to know
 
+- Recipes that make no item, like enchants, show the recipe's own icon in the Shift list.
 - Recipes taught by trainers show no orange number: the game doesn't publish the skill trainers ask for. Their yellow number is usually a little above it.
 - Profession names follow your game's language. Recipe names come from the game, so they're in your language too.
 - After a big WoW Forever update that adds recipes, the addon may need an update to show them.

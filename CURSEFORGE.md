@@ -34,7 +34,7 @@ Mats Forever shows on every crafting material's tooltip not just which professio
 Example, on Linen Cloth: `Mat For: Engineering (6), Blacksmithing (3), First Aid (2), Tailoring (1)`
 
 ### Hold Shift for the recipes
-Hold **Shift** while hovering a material to see each profession's recipes that use it, easiest first, with how many of the material each one takes and its **skill levels** in the recipe colors: the skill it needs (orange, for recipes learned from a recipe item), then where it turns yellow, green and grey. Your own professions show **your current skill**, and long lists there skip recipes already grey for you.
+Hold **Shift** on a material to see each profession's recipes for it, easiest first. Each shows **the icon of the item it makes**, how many of the material it takes and its **skill levels** in the recipe colors: the skill it needs (orange, for recipes learned from a recipe item), then where it turns yellow, green and grey. Your own professions show **your current skill**, and long lists there skip recipes already grey for you.
 
 Example, on Linen Cloth, for an engineer with 72 skill:
 `Engineering      72`
@@ -55,7 +55,7 @@ Bags, bank, the auction house, mail, loot windows, chat links and recipe windows
 ### Good to know
 - Made for **WoW Forever**.
 - A big WoW Forever update that adds recipes may need an update here to show them.
-- **/matsforever** opens the options: turn off the tooltip line or the Shift list, or show only your professions.
+- **/matsforever** opens the options: turn off the tooltip line or the Shift list.
 
 This addon was made with AI.
 
@@ -67,11 +67,11 @@ This addon was made with AI.
 
 ## B. Upload File form
 
-**File:** `dist\MatsForever-1.3.2.zip`
+**File:** `dist\MatsForever-1.4.0.zip`
 
 **Display name**
 ```
-Mats Forever 1.3.2
+Mats Forever 1.4.0
 ```
 
 **Release type:** `Release`
@@ -80,13 +80,6 @@ Mats Forever 1.3.2
 
 **Changelog** (paste only the newest part; paste older parts too if they never went up)
 ```markdown
-1.3.2
-- Fixed: after you opened Mats Forever's options, the game's own options could show the error "AddOn 'MatsForever' tried to call the protected function 'IsUserOAuthed()'".
-
-1.3.1
-- Fixed an error when opening the options during combat ("tried to call the protected function 'OpenSettingsPanel()'"). The options now open as soon as the fight ends.
-
-1.3.0
-- New: in your own professions, a long Shift recipe list leaves out the recipes that are already grey for you, so it starts at the ones that still give skill-ups. A line says how many were left out.
-- A profession with up to 15 recipes for the material now lists them all, instead of 10 and "and 2 more".
+1.4.0
+- New: in the Shift recipe list, each recipe shows the icon of the item it makes, so you can spot a recipe without reading every name. Recipes that make no item, like enchants, show the recipe's own icon.
 ```

@@ -7,8 +7,9 @@
 -- own skill next to each of their professions:
 --
 --   Engineering                        72
---   Rough Copper Bomb x2          60 75 90
+--   [icon] Rough Copper Bomb x2   60 75 90
 --
+-- with the icon of what the recipe makes, and
 -- in the recipe colors: the skill it needs (orange, only when the game data has it), then where it turns
 -- yellow, green and grey.
 
@@ -29,8 +30,9 @@ local SKILL_COLORS = { "|cffff8040%d|r", "|cffffff00%d|r", "|cff40bf40%d|r", "|c
 -- Reading the data
 ---------------------------------------------------------------------------
 
--- item ID -> { { prof = id, recipes = { { spell, count, required, yellow, grey }, ... } }, ... }, read from
--- the data on first hover. required is 0 when the game data doesn't have it.
+-- item ID -> { { prof = id, recipes = { { spell, count, required, yellow, grey, made }, ... } }, ... }, read
+-- from the data on first hover. required is 0 when the game data doesn't have it; made is the item the
+-- recipe makes, 0 when it makes none.
 local parsed = {}
 
 local function usesOf(item)
@@ -44,8 +46,9 @@ local function usesOf(item)
 	local uses = {}
 	for prof, list in text:gmatch("(%d+):([^;]+)") do
 		local recipes = {}
-		for spell, count, required, yellow, grey in list:gmatch("(%d+)%.(%d+)%.(%d+)%.(%d+)%.(%d+)") do
-			recipes[#recipes + 1] = { tonumber(spell), tonumber(count), tonumber(required), tonumber(yellow), tonumber(grey) }
+		for spell, count, required, yellow, grey, made in list:gmatch("(%d+)%.(%d+)%.(%d+)%.(%d+)%.(%d+)%.(%d+)") do
+			recipes[#recipes + 1] = { tonumber(spell), tonumber(count), tonumber(required), tonumber(yellow),
+				tonumber(grey), tonumber(made) }
 		end
 		uses[#uses + 1] = { prof = tonumber(prof), recipes = recipes }
 	end
@@ -72,6 +75,27 @@ end
 local function spellName(id)
 	if C_Spell and C_Spell.GetSpellName then return C_Spell.GetSpellName(id) end
 	return (GetSpellInfo(id))
+end
+
+-- The icon of what a recipe makes; for one that makes no item (an enchant), the recipe's own icon.
+local function recipeIcon(recipe)
+	local spell, made = recipe[1], recipe[6]
+	local icon
+	if made > 0 then
+		if C_Item and C_Item.GetItemIconByID then
+			icon = C_Item.GetItemIconByID(made)
+		elseif GetItemIcon then
+			icon = GetItemIcon(made)
+		end
+	end
+	if not icon then
+		if C_Spell and C_Spell.GetSpellTexture then
+			icon = C_Spell.GetSpellTexture(spell)
+		elseif GetSpellTexture then
+			icon = GetSpellTexture(spell)
+		end
+	end
+	return icon
 end
 
 -- "30 60 75 90" in the recipe colors. Green is halfway between yellow and grey, like the game works it out.
@@ -153,6 +177,8 @@ local function addRecipeList(tooltip, uses)
 			if shown == limit then break end
 			local name = spellName(recipe[1])
 			if name then
+				local icon = recipeIcon(recipe)
+				if icon then name = ICON:format(icon) .. name end
 				tooltip:AddDoubleLine("    " .. name .. " " .. COUNT_COLOR:format(recipe[2]), skillLevels(recipe),
 					1, 1, 1, 1, 1, 1)
 				shown = shown + 1

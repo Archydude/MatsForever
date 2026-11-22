@@ -2,10 +2,13 @@
 ArchdudeWhatsNew:Register("MatsForever", {
 	title = "Mats Forever",
 	icon = "Interface\\Icons\\INV_Fabric_Linen_01",
-	version = "1.3.2",
+	version = "1.4.0",
 	seen = "MatsForeverWhatsNew",
 	saved = { "MatsForeverDB" },
 	changes = {
+		{ "1.4.0",
+			"New: in the Shift recipe list, each recipe shows the icon of the item it makes, so you can spot a recipe without reading every name. Recipes that make no item, like enchants, show the recipe's own icon.",
+		},
 		{ "1.3.2",
 			"Fixed: after you opened Mats Forever's options, the game's own options could show the error \"AddOn 'MatsForever' tried to call the protected function 'IsUserOAuthed()'\".",
 		},
