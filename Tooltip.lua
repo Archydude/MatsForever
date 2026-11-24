@@ -109,8 +109,8 @@ local function skillLevels(recipe)
 	local parts = {}
 	if required > 0 then parts[#parts + 1] = SKILL_COLORS[1]:format(required) end
 	if grey > 0 then
-		if yellow > required then parts[#parts + 1] = SKILL_COLORS[2]:format(yellow) end
-		if green > required then parts[#parts + 1] = SKILL_COLORS[3]:format(green) end
+		if yellow > required and yellow < grey then parts[#parts + 1] = SKILL_COLORS[2]:format(yellow) end
+		if green > math.max(required, yellow) and green < grey then parts[#parts + 1] = SKILL_COLORS[3]:format(green) end
 		parts[#parts + 1] = SKILL_COLORS[4]:format(grey)
 	end
 	return table.concat(parts, " ")
