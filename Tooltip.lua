@@ -24,7 +24,9 @@ local OTHER_COLOR = "|cffffffff%s|r"
 local GREY = { 0.6, 0.6, 0.6 }
 local COUNT_COLOR = "|cff66ccffx%d|r" -- light blue: not one of the skill colors, the profession green or the label gold
 local ICON = "|T%d:0|t " -- 0: as tall as the text
+local KNOWN_ICON = "|TInterface\\RAIDFRAME\\ReadyCheck-Ready:12|t "
 local SKILL_COLORS = { "|cffff8040%d|r", "|cffffff00%d|r", "|cff40bf40%d|r", "|cff808080%d|r" } -- orange, yellow, green, grey
+local DIFFICULTY_COLORS = { "|cffff8040%s|r", "|cffffff00%s|r", "|cff40bf40%s|r", "|cff808080%s|r" }
 
 ---------------------------------------------------------------------------
 -- Reading the data
@@ -155,6 +157,25 @@ local function recipesToList(recipes, skill)
 	return list, #recipes - #list
 end
 
+local function isKnown(spellID)
+	local fn = (C_SpellBook and C_SpellBook.IsSpellKnown) or IsSpellKnown
+	if not fn then return false end
+	local ok, known = pcall(fn, spellID)
+	return ok and known == true
+end
+
+local function difficultyColor(recipe, skill)
+	if not (skill and skill > 0) then return nil end
+	local yellow, grey = recipe[4], recipe[5]
+	if grey > 0 then
+		if skill >= grey then return DIFFICULTY_COLORS[4] end
+		local green = math.floor((yellow + grey) / 2)
+		if skill >= green then return DIFFICULTY_COLORS[3] end
+		if skill >= yellow then return DIFFICULTY_COLORS[2] end
+	end
+	return DIFFICULTY_COLORS[1]
+end
+
 local function addRecipeList(tooltip, uses)
 	tooltip:AddLine(" ")
 	tooltip:AddLine(LABEL)
@@ -177,8 +198,11 @@ local function addRecipeList(tooltip, uses)
 			if shown == limit then break end
 			local name = spellName(recipe[1])
 			if name then
+				local diffColor = difficultyColor(recipe, skill)
+				if diffColor then name = diffColor:format(name) end
 				local icon = recipeIcon(recipe)
 				if icon then name = ICON:format(icon) .. name end
+				if skill and isKnown(recipe[1]) then name = KNOWN_ICON .. name end
 				tooltip:AddDoubleLine("    " .. name .. " " .. COUNT_COLOR:format(recipe[2]), skillLevels(recipe),
 					1, 1, 1, 1, 1, 1)
 				shown = shown + 1

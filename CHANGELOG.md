@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.0
+- **Known recipes marked:** in the Shift recipe list, recipes your character already knows show a green checkmark.
+- **Live recipe colors:** for your own professions, each recipe's name is colored orange, yellow, green or grey based on your current skill level.
+- **Shorter slash commands:** `/mf` and `/mats` now open the options alongside `/matsforever`.
+- Fixed: recipes whose yellow, green and grey skill thresholds overlap no longer repeat the same number twice.
+
 ## 1.4.0
 - New: in the Shift recipe list, each recipe shows the icon of the item it makes, so you can spot a recipe without reading every name. Recipes that make no item, like enchants, show the recipe's own icon.
 

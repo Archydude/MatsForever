@@ -34,7 +34,7 @@ Mats Forever shows on every crafting material's tooltip not just which professio
 Example, on Linen Cloth: `Mat For: Engineering (6), Blacksmithing (3), First Aid (2), Tailoring (1)`
 
 ### Hold Shift for the recipes
-Hold **Shift** on a material to see each profession's recipes for it, easiest first. Each shows **the icon of the item it makes**, how many of the material it takes and its **skill levels** in the recipe colors: the skill it needs (orange, for recipes learned from a recipe item), then where it turns yellow, green and grey. Your own professions show **your current skill**, and long lists there skip recipes already grey for you.
+Hold **Shift** on a material to see each profession's recipes, easiest first. Each shows its **item icon**, material count and **skill levels** (orange required skill, then yellow, green and grey). Your own professions show **your skill**, color recipe names live by difficulty, mark **known recipes** with a green checkmark, and skip already-grey recipes on long lists.
 
 Example, on Linen Cloth, for an engineer with 72 skill:
 `Engineering      72`
@@ -55,7 +55,7 @@ Bags, bank, the auction house, mail, loot windows, chat links and recipe windows
 ### Good to know
 - Made for **WoW Forever**.
 - A big WoW Forever update that adds recipes may need an update here to show them.
-- **/matsforever** opens the options: turn off the tooltip line or the Shift list.
+- **/matsforever** (`/mf`, `/mats`) opens the options.
 
 This addon was made with AI.
 
@@ -67,11 +67,11 @@ This addon was made with AI.
 
 ## B. Upload File form
 
-**File:** `dist\MatsForever-1.4.0.zip`
+**File:** `dist\MatsForever-1.5.0.zip`
 
 **Display name**
 ```
-Mats Forever 1.4.0
+Mats Forever 1.5.0
 ```
 
 **Release type:** `Release`
@@ -80,6 +80,12 @@ Mats Forever 1.4.0
 
 **Changelog** (paste only the newest part; paste older parts too if they never went up)
 ```markdown
+1.5.0
+- **Known recipes marked:** in the Shift recipe list, recipes your character already knows show a green checkmark.
+- **Live recipe colors:** for your own professions, each recipe's name is colored orange, yellow, green or grey based on your current skill level.
+- **Shorter slash commands:** `/mf` and `/mats` now open the options alongside `/matsforever`.
+- Fixed: recipes whose yellow, green and grey skill thresholds overlap no longer repeat the same number twice.
+
 1.4.0
 - New: in the Shift recipe list, each recipe shows the icon of the item it makes, so you can spot a recipe without reading every name. Recipes that make no item, like enchants, show the recipe's own icon.
 ```

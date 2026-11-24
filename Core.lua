@@ -105,6 +105,8 @@ end)
 ---------------------------------------------------------------------------
 
 SLASH_MATSFOREVER1 = "/matsforever"
+SLASH_MATSFOREVER2 = "/mf"
+SLASH_MATSFOREVER3 = "/mats"
 SlashCmdList.MATSFOREVER = function()
 	ns.OpenOptions()
 end

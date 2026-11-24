@@ -2,10 +2,16 @@
 ArchdudeWhatsNew:Register("MatsForever", {
 	title = "Mats Forever",
 	icon = "Interface\\Icons\\INV_Fabric_Linen_01",
-	version = "1.4.0",
+	version = "1.5.0",
 	seen = "MatsForeverWhatsNew",
 	saved = { "MatsForeverDB" },
 	changes = {
+		{ "1.5.0",
+			"|cffffd100Known recipes marked:|r in the Shift recipe list, recipes your character already knows show a green checkmark.",
+			"|cffffd100Live recipe colors:|r for your own professions, each recipe's name is colored orange, yellow, green or grey based on your current skill level.",
+			"|cffffd100Shorter slash commands:|r |cffffd100/mf|r and |cffffd100/mats|r now open the options alongside |cffffd100/matsforever|r.",
+			"Fixed: recipes whose yellow, green and grey skill thresholds overlap no longer repeat the same number twice.",
+		},
 		{ "1.4.0",
 			"New: in the Shift recipe list, each recipe shows the icon of the item it makes, so you can spot a recipe without reading every name. Recipes that make no item, like enchants, show the recipe's own icon.",
 		},
