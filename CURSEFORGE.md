@@ -67,11 +67,11 @@ This addon was made with AI.
 
 ## B. Upload File form
 
-**File:** `dist\MatsForever-1.5.0.zip`
+**File:** `dist\MatsForever-1.5.1.zip`
 
 **Display name**
 ```
-Mats Forever 1.5.0
+Mats Forever 1.5.1
 ```
 
 **Release type:** `Release`
@@ -80,6 +80,11 @@ Mats Forever 1.5.0
 
 **Changelog** (paste only the newest part; paste older parts too if they never went up)
 ```markdown
+1.5.1
+- Fixed: leveling a profession updates your skill on tooltips right away, and racial or bonus skill modifiers (like Gnome Engineering) now count toward your displayed skill and recipe difficulty colors.
+- Fixed: recipes unavailable on your game client are filtered out before counting "and N more" in the Shift recipe list.
+- Fixed: characters with no learned professions no longer re-scan their skill list repeatedly on every tooltip hover.
+
 1.5.0
 - **Known recipes marked:** in the Shift recipe list, recipes your character already knows show a green checkmark.
 - **Live recipe colors:** for your own professions, each recipe's name is colored orange, yellow, green or grey based on your current skill level.

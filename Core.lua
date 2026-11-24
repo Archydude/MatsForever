@@ -40,6 +40,7 @@ end
 -- profession ID -> the character's skill in it, for the character's professions. Built when first
 -- needed, and again whenever the character's skills change.
 local mine
+local enteredWorld = false
 
 local function readMyProfessions()
 	mine = {}
@@ -48,15 +49,17 @@ local function readMyProfessions()
 
 	if GetProfessions and GetProfessionInfo then
 		for _, index in pairs({ GetProfessions() }) do
-			local name, _, rank, _, _, _, skillLine = GetProfessionInfo(index)
+			local name, _, rank, _, _, _, skillLine, modifier = GetProfessionInfo(index)
 			local id = (skillLine and ns.PROFESSIONS[skillLine] and skillLine) or byName[name]
-			if id then mine[id] = tonumber(rank) or 0 end
+			if id then mine[id] = math.max(0, (tonumber(rank) or 0) + (tonumber(modifier) or 0)) end
 		end
 	end
 	if GetNumSkillLines and GetSkillLineInfo then
 		for i = 1, GetNumSkillLines() do
-			local name, isHeader, _, rank = GetSkillLineInfo(i)
-			if name and not isHeader and byName[name] then mine[byName[name]] = tonumber(rank) or 0 end
+			local name, isHeader, _, rank, _, modifier = GetSkillLineInfo(i)
+			if name and not isHeader and byName[name] then
+				mine[byName[name]] = math.max(0, (tonumber(rank) or 0) + (tonumber(modifier) or 0))
+			end
 		end
 	end
 end
@@ -65,8 +68,8 @@ local function myProfessions()
 	if not mine then readMyProfessions() end
 	local list = mine
 	-- Right after login the game may not have told us the character's skills yet; ask again next time
-	-- rather than keep an empty list.
-	if next(mine) == nil then mine = nil end
+	-- rather than keep an empty list until the player enters the world.
+	if not enteredWorld and next(mine) == nil then mine = nil end
 	return list
 end
 
@@ -85,12 +88,18 @@ end
 
 local events = CreateFrame("Frame")
 events:RegisterEvent("ADDON_LOADED")
+events:RegisterEvent("PLAYER_ENTERING_WORLD")
 events:RegisterEvent("SKILL_LINES_CHANGED")
+events:RegisterEvent("CHAT_MSG_SKILL")
 events:SetScript("OnEvent", function(self, event, name)
-	if event == "SKILL_LINES_CHANGED" then
+	if event == "PLAYER_ENTERING_WORLD" then
+		enteredWorld = true
+		mine = nil
+	elseif event == "SKILL_LINES_CHANGED" or event == "CHAT_MSG_SKILL" then
 		mine = nil
 	elseif name == ADDON_NAME then
 		self:UnregisterEvent("ADDON_LOADED")
+		if IsLoggedIn and IsLoggedIn() then enteredWorld = true end
 		MatsForeverDB = MatsForeverDB or {}
 		for key, value in pairs(ns.DEFAULTS) do
 			if MatsForeverDB[key] == nil then MatsForeverDB[key] = value end

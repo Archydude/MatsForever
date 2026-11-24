@@ -2,10 +2,15 @@
 ArchdudeWhatsNew:Register("MatsForever", {
 	title = "Mats Forever",
 	icon = "Interface\\Icons\\INV_Fabric_Linen_01",
-	version = "1.5.0",
+	version = "1.5.1",
 	seen = "MatsForeverWhatsNew",
 	saved = { "MatsForeverDB" },
 	changes = {
+		{ "1.5.1",
+			"Fixed: leveling a profession updates your skill on tooltips right away, and racial or bonus skill modifiers (like Gnome Engineering) now count toward your displayed skill and recipe difficulty colors.",
+			"Fixed: recipes unavailable on your game client are filtered out before counting \"and N more\" in the Shift recipe list.",
+			"Fixed: characters with no learned professions no longer re-scan their skill list repeatedly on every tooltip hover.",
+		},
 		{ "1.5.0",
 			"|cffffd100Known recipes marked:|r in the Shift recipe list, recipes your character already knows show a green checkmark.",
 			"|cffffd100Live recipe colors:|r for your own professions, each recipe's name is colored orange, yellow, green or grey based on your current skill level.",

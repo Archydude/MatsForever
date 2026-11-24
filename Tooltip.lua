@@ -192,23 +192,24 @@ local function addRecipeList(tooltip, uses)
 			local text = greyLeftOut == 1 and "    1 grey recipe left out" or ("    %d grey recipes left out"):format(greyLeftOut)
 			tooltip:AddLine(text, unpack(GREY))
 		end
-		local shown = 0
-		local limit = tooLong(#recipes) and MAX_RECIPES or #recipes
+		local available = {}
 		for _, recipe in ipairs(recipes) do
-			if shown == limit then break end
 			local name = spellName(recipe[1])
-			if name then
-				local diffColor = difficultyColor(recipe, skill)
-				if diffColor then name = diffColor:format(name) end
-				local icon = recipeIcon(recipe)
-				if icon then name = ICON:format(icon) .. name end
-				if skill and isKnown(recipe[1]) then name = KNOWN_ICON .. name end
-				tooltip:AddDoubleLine("    " .. name .. " " .. COUNT_COLOR:format(recipe[2]), skillLevels(recipe),
-					1, 1, 1, 1, 1, 1)
-				shown = shown + 1
-			end
+			if name then available[#available + 1] = { recipe = recipe, name = name } end
 		end
-		local more = #recipes - shown
+		local limit = tooLong(#available) and MAX_RECIPES or #available
+		for i = 1, limit do
+			local entry = available[i]
+			local recipe, name = entry.recipe, entry.name
+			local diffColor = difficultyColor(recipe, skill)
+			if diffColor then name = diffColor:format(name) end
+			local icon = recipeIcon(recipe)
+			if icon then name = ICON:format(icon) .. name end
+			if skill and isKnown(recipe[1]) then name = KNOWN_ICON .. name end
+			tooltip:AddDoubleLine("    " .. name .. " " .. COUNT_COLOR:format(recipe[2]), skillLevels(recipe),
+				1, 1, 1, 1, 1, 1)
+		end
+		local more = #available - limit
 		if more > 0 then
 			tooltip:AddLine(("    and %d more"):format(more), unpack(GREY))
 		end
